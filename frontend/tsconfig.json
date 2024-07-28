@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@lib/*": ["./frontend/src/lib/*"]
+    },
+    "outDir": "./dist" // Specify an output directory for compiled files
+  },
+  "include": ["src/**/*", "frontend/src/lib/**/*"],
+  "exclude": ["node_modules", "dist"] // Exclude node_modules and output directory
+}
