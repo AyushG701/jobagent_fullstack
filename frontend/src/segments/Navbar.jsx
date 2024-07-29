@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-// import { useSelector } from "react-redux";
+
 import { Link } from "react-router-dom";
 import { Menu } from "lucide-react";
+import { useSelector } from "react-redux";
 const Navbar = () => {
   const [show, setShow] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-  // const { isAuthenticated } = useSelector((state) => state.user);
+  // const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const { isAuthenticated } = useSelector((state) => state.user);
+
   return (
     <>
       <header className="bg-white  ">
