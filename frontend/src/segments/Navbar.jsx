@@ -5,8 +5,8 @@ import { Menu } from "lucide-react";
 import { useSelector } from "react-redux";
 const Navbar = () => {
   const [show, setShow] = useState(false);
-  // const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  // const { isAuthenticated } = useSelector((state) => state.user);
 
   return (
     <>
