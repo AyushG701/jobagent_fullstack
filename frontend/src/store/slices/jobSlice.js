@@ -15,9 +15,8 @@ const jobSlice = createSlice({
     requestForAllJobs(state, action) {
       state.loading = true;
       state.error = null;
-      state.message = null;
     },
-    sucessForAllJobs(state, action) {
+    successForAllJobs(state, action) {
       state.loading = false;
       state.jobs = action.payload;
       state.error = null;
@@ -41,11 +40,40 @@ const jobSlice = createSlice({
   },
 });
 
-export const fecthJobs =
+// export const fetchJobs =
+//   (city, niche, searchKeyword = "") =>
+//   async (dispatch) => {
+//     try {
+//       dispatch(jobSlice.actions.requestForAllJobs());
+//       let link = "http://localhost:4000/api/v1/job/getall?";
+//       let queryParams = [];
+
+//       if (searchKeyword) {
+//         queryParams.push(`searchKeyword=${searchKeyword}`);
+//       }
+//       if (city) {
+//         queryParams.push(`city=${city}`);
+//       }
+//       if (niche) {
+//         queryParams.push(`niche=${niche}`);
+//       }
+//       link += queryParams.join("&");
+//       const response = await axios.get(link, { withCredentials: true });
+//       dispatch(jobSlice.actions.successForAllJobs(response.data.jobs));
+//       dispatch(jobSlice.actions.clearAllErrors());
+//     } catch (error) {
+//       console.log(jobSlice.actions.failureForAllJobs(error.response));
+//       dispatch(jobSlice.actions.failureForAllJobs(error.response.data.message));
+//     }
+//   };
+
+export const fetchJobs =
   (city, niche, searchKeyword = "") =>
   async (dispatch) => {
     try {
-      dispatch(jobSlice.action.requestForAllJobs());
+      console.log("Dispatching requestForAllJobs");
+      dispatch(jobSlice.actions.requestForAllJobs());
+
       let link = "http://localhost:4000/api/v1/job/getall?";
       let queryParams = [];
 
@@ -59,11 +87,22 @@ export const fecthJobs =
         queryParams.push(`niche=${niche}`);
       }
       link += queryParams.join("&");
+
+      console.log("Fetching jobs from URL:", link);
       const response = await axios.get(link, { withCredentials: true });
+      console.log("Response data:", response.data);
+
       dispatch(jobSlice.actions.successForAllJobs(response.data.jobs));
       dispatch(jobSlice.actions.clearAllErrors());
     } catch (error) {
-      dispatch(jobSlice.actions.failureForAllJobs(error.response.data.message));
+      console.error("Error fetching jobs:", error);
+
+      const errorMessage =
+        error.response && error.response.data
+          ? error.response.data.message
+          : "An unknown error occurred";
+
+      dispatch(jobSlice.actions.failureForAllJobs(errorMessage));
     }
   };
 
