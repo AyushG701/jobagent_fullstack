@@ -1,4 +1,4 @@
-import { ChevronDown, ChevronUp, Menu, Search, X } from "lucide-react";
+import { ChevronDown, Menu, Search, X } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast, Toaster } from "sonner";
@@ -199,50 +199,45 @@ const Jobs = () => {
 
     <>
       <Toaster />
-      {loading ? (
-        <Spinner />
-      ) : (
-        <div className="flex h-screen">
-          {/* Sidebar */}
-          <div
-            className={`fixed top-0 left-0 bottom-0 w-64 transform bg-white border-r transition-transform duration-300 ease-in-out z-10 ${
-              isOpen ? "translate-x-0" : "-translate-x-full"
-            } lg:translate-x-0 lg:relative`}
-          >
-            <div className="px-4 py-6 flex flex-col">
-              {/* <span className="grid h-10 w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
+
+      <div className="flex h-screen">
+        {/* Sidebar */}
+        <div
+          className={`fixed top-0 left-0 bottom-0 w-64 transform bg-white border-r transition-transform duration-300 ease-in-out z-10 ${
+            isOpen ? "translate-x-0" : "-translate-x-full"
+          } lg:translate-x-0 lg:relative`}
+        >
+          <div className="px-4 py-6 flex flex-col">
+            {/* <span className="grid h-10 w-32 place-content-center rounded-lg bg-gray-100 text-xs text-gray-600">
               Logo
             </span> */}
-              <div className="flex items-center flex-row-reverse justify-between mb-4">
-                <button
-                  className="lg:hidden"
-                  onClick={() => setIsOpen(!isOpen)}
-                >
-                  <X />
-                </button>
-              </div>
-              <div className="lg:hidden search-tab-wrapper flex items-center space-x-2 max-w-full">
-                <input
-                  type="text"
-                  value={searchKeyword}
-                  onChange={(e) => setSearchKeyword(e.target.value)}
-                  className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  placeholder="Search for jobs..."
-                />
-                <button
-                  onClick={handleSearch}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                >
-                  <Search />
-                </button>
-              </div>
+            <div className="flex items-center flex-row-reverse justify-between mb-4">
+              <button className="lg:hidden" onClick={() => setIsOpen(!isOpen)}>
+                <X />
+              </button>
             </div>
+            <div className="lg:hidden  flex items-center space-x-2 max-w-full">
+              <input
+                type="text"
+                value={searchKeyword}
+                onChange={(e) => setSearchKeyword(e.target.value)}
+                className="w-full px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Search for jobs..."
+              />
+              <button
+                onClick={handleSearch}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <Search />
+              </button>
+            </div>
+          </div>
 
-            {/* Sidebar Content - scrollable */}
-            <div className="flex-1 overflow-y-auto px-4 py-6">
-              <ul className="space-y-1">
-                {/* Initially hidden, open only when logged in */}
-                {/* <li>
+          {/* Sidebar Content - scrollable */}
+          <div className="flex-1 overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-200 px-4 py-6  max-h-96">
+            <ul className="space-y-1">
+              {/* Initially hidden, open only when logged in */}
+              {/* <li>
                 <a
                   href="#"
                   className="block rounded-lg bg-gray-100 px-4 py-2 text-sm font-medium text-gray-700"
@@ -251,133 +246,132 @@ const Jobs = () => {
                 </a>
               </li> */}
 
-                <li>
-                  <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                      <span className="text-sm font-medium">
-                        Filter by City
-                      </span>
-                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                        <ChevronDown />
-                      </span>
-                    </summary>
+              <li>
+                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                    <span className="text-sm font-medium">Filter by City</span>
+                    <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                      <ChevronDown />
+                    </span>
+                  </summary>
 
-                    <ul className="mt-2 space-y-1 px-4">
-                      {cities.map((city, index) => (
-                        <div
-                          key={index}
-                          className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 cursor-pointer"
-                          id="cities"
-                          onClick={() => handleCityChange(city)}
+                  <ul className="mt-2 space-y-1 px-4  ">
+                    {cities.map((city, index) => (
+                      <div
+                        key={index}
+                        className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 cursor-pointer"
+                        id="cities"
+                        onClick={() => handleCityChange(city)}
+                      >
+                        <input
+                          type="radio"
+                          id={city}
+                          name="city"
+                          value={city}
+                          checked={selectedCity === city}
+                          onChange={() => handleCityChange(city)}
+                          className="mr-2"
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <label
+                          htmlFor={city}
+                          onClick={(e) => e.stopPropagation()} // Prevent event bubbling
                         >
-                          <input
-                            type="radio"
-                            id={city}
-                            name="city"
-                            value={city}
-                            checked={selectedCity === city}
-                            onChange={() => handleCityChange(city)}
-                            className="mr-2"
-                            onClick={(e) => e.stopPropagation()}
-                          />
-                          <label
-                            htmlFor={city}
-                            onClick={(e) => e.stopPropagation()} // Prevent event bubbling
-                          >
-                            {city}
-                          </label>
-                        </div>
-                      ))}
-                    </ul>
-                  </details>
-                </li>
+                          {city}
+                        </label>
+                      </div>
+                    ))}
+                  </ul>
+                </details>
+              </li>
 
-                <li>
-                  <a
-                    href="#"
-                    className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                  >
-                    Billing
-                  </a>
-                </li>
+              <li>
+                <a
+                  href="#"
+                  className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                >
+                  Billing
+                </a>
+              </li>
 
-                <li>
-                  <details className="group [&_summary::-webkit-details-marker]:hidden">
-                    <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
-                      <span className="text-sm font-medium">
-                        Filter Job By Niche
-                      </span>
-                      <span className="shrink-0 transition duration-300 group-open:-rotate-180">
-                        <ChevronDown />
-                      </span>
-                    </summary>
+              <li>
+                <details className="group [&_summary::-webkit-details-marker]:hidden">
+                  <summary className="flex cursor-pointer items-center justify-between rounded-lg px-4 py-2 text-gray-500 hover:bg-gray-100 hover:text-gray-700">
+                    <span className="text-sm font-medium">
+                      Filter Job By Niche
+                    </span>
+                    <span className="shrink-0 transition duration-300 group-open:-rotate-180">
+                      <ChevronDown />
+                    </span>
+                  </summary>
 
-                    <ul className="mt-2 space-y-1 px-4">
-                      {nichesArray.map((niche, index) => (
-                        <div
-                          key={index}
-                          className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
-                          id="cities"
-                          onClick={() => handleNicheChange(niche)}
+                  <ul className="mt-2 space-y-1 px-4  overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-200">
+                    {nichesArray.map((niche, index) => (
+                      <div
+                        key={index}
+                        className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis"
+                        id="cities"
+                        onClick={() => handleNicheChange(niche)}
+                      >
+                        <input
+                          type="radio"
+                          id={niche}
+                          name="niche"
+                          value={niche}
+                          checked={selectedNiche === niche}
+                          onChange={() => handleNicheChange(niche)}
+                          className="mr-2"
+                          onClick={(e) => e.stopPropagation()}
+                        />
+                        <label
+                          htmlFor={niche}
+                          onClick={(e) => e.stopPropagation()} // Prevent event bubbling
+                          className="overflow-hidden text-ellipsis whitespace-nowrap"
                         >
-                          <input
-                            type="radio"
-                            id={niche}
-                            name="niche"
-                            value={niche}
-                            checked={selectedNiche === niche}
-                            onChange={() => handleNicheChange(niche)}
-                            className="mr-2"
-                            onClick={(e) => e.stopPropagation()}
-                          />
-                          <label
-                            htmlFor={niche}
-                            onClick={(e) => e.stopPropagation()} // Prevent event bubbling
-                            className="overflow-hidden text-ellipsis whitespace-nowrap"
-                          >
-                            {niche}
-                          </label>
-                        </div>
-                      ))}
-                    </ul>
-                  </details>
-                </li>
+                          {niche}
+                        </label>
+                      </div>
+                    ))}
+                  </ul>
+                </details>
+              </li>
 
-                <li>
-                  <a
-                    href="#"
-                    className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
-                  >
-                    Applied jobs
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* User Info at the bottom */}
-            <div className="flex-none border-t border-gray-100">
-              <a
-                href="#"
-                className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50"
-              >
-                <img
-                  alt=""
-                  src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                  className="h-10 w-10 rounded-full object-cover"
-                />
-                <div>
-                  <p className="text-xs">
-                    <strong className="block font-medium">
-                      Eric Frusciante
-                    </strong>
-                    <span>eric@frusciante.com</span>
-                  </p>
-                </div>
-              </a>
-            </div>
+              <li>
+                <a
+                  href="#"
+                  className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
+                >
+                  Applied jobs
+                </a>
+              </li>
+            </ul>
           </div>
 
-          {/* Main Content */}
+          {/* User Info at the bottom */}
+          <div className="flex-none border-t border-gray-100">
+            <a
+              href="#"
+              className="flex items-center gap-2 bg-white p-4 hover:bg-gray-50"
+            >
+              <img
+                alt=""
+                src="https://images.unsplash.com/photo-1600486913747-55e5470d6f40?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
+                className="h-10 w-10 rounded-full object-cover"
+              />
+              <div>
+                <p className="text-xs">
+                  <strong className="block font-medium">Eric Frusciante</strong>
+                  <span>eric@frusciante.com</span>
+                </p>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        {loading ? (
+          <Spinner />
+        ) : (
           <div className={`flex-1 p-6  transition-all duration-300`}>
             <button
               className="lg:hidden mb-4"
@@ -479,8 +473,8 @@ const Jobs = () => {
                 ))}
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };
