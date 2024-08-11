@@ -11,8 +11,18 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 import Footer from "./segments/Footer";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { Toaster } from "sonner";
+import { getUser } from "./store/slices/userSlice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
   return (
     <>
       <Router>
@@ -30,6 +40,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
+        <Toaster />
       </Router>
     </>
   );

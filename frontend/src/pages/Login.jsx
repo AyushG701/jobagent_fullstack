@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { clearAllUserErrors, login } from "../store/slices/userSlice";
-import { toast } from "sonner";
+import { toast, Toaster } from "sonner";
 import { Lock, Mails, User } from "lucide-react";
 
 const Login = () => {
@@ -38,6 +38,7 @@ const Login = () => {
 
   return (
     <>
+      <Toaster />
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-lg text-center">
           <h1 className="text-2xl font-bold sm:text-3xl">
