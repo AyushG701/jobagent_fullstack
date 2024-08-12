@@ -35,8 +35,13 @@ const Dashboard = () => {
   const navigateTo = useNavigate();
 
   const handleLogout = () => {
-    dispatch(logout());
-    toast.success("Logged out successfully.");
+    dispatch(logout())
+      .then(() => {
+        toast.success("Logged out successfully.");
+      })
+      .catch((error) => {
+        toast.error(error || "Failed to log out. Please try again.");
+      });
   };
 
   useEffect(() => {
@@ -50,7 +55,7 @@ const Dashboard = () => {
   }, [dispatch, error, loading, isAuthenticated]);
 
   return (
-    <section className="flex h-screen overflow-hidden bg-gray-50">
+    <section className="flex h-screen overflow-hidden bg-gray-50 mt-10">
       <div
         className={`flex-shrink-0 ${
           show ? "w-64" : "w-20"

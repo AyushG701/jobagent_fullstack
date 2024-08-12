@@ -152,7 +152,14 @@ export const logout = () => async (dispatch) => {
     dispatch(userSlice.actions.logoutSuccess());
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(userSlice.actions.logoutFailed(error.response.data.message));
+    dispatch(
+      userSlice.actions.logoutFailed(
+        error.response?.data?.message || "Failed to log out.",
+      ),
+    );
+    return Promise.reject(
+      error.response?.data?.message || "Failed to log out.",
+    );
   }
 };
 
