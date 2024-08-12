@@ -285,14 +285,14 @@ const Jobs = () => {
                 </details>
               </li>
 
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="block rounded-lg px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-700"
                 >
-                  Billing
+                  certain element thinking of
                 </a>
-              </li>
+              </li> */}
 
               <li>
                 <details className="group [&_summary::-webkit-details-marker]:hidden">
@@ -305,7 +305,7 @@ const Jobs = () => {
                     </span>
                   </summary>
 
-                  <ul className="mt-2 space-y-1 px-4  overflow-y-scroll scrollbar-thin scrollbar-thumb-blue-500 scrollbar-track-gray-200">
+                  <ul className="mt-2 space-y-1 px-4  ">
                     {nichesArray.map((niche, index) => (
                       <div
                         key={index}

@@ -58,3 +58,15 @@
     --chart-5: 340 75% 55%;
   }
 }
+/* Add this to your global CSS file */
+@layer utilities {
+  .no-spinner::-webkit-inner-spin-button,
+  .no-spinner::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .no-spinner {
+    -moz-appearance: textfield;
+  }
+}

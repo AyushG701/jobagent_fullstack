@@ -51,7 +51,7 @@ const Login = () => {
 
         <form
           onSubmit={handleLogin}
-          className="mx-auto mb-0 mt-8 max-w-md space-y-4"
+          className="mx-auto mb-0 mt-8 max-w-md space-y-4    shadow-sm"
         >
           <div>
             <label htmlFor="role" className="sr-only">

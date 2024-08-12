@@ -176,7 +176,7 @@ const Register = () => {
                 type="number"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                className="no-spinner w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="111-222-333"
               />
               <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
