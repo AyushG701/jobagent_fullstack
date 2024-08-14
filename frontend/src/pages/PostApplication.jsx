@@ -105,6 +105,7 @@ const PostApplication = () => {
       dispatch(resetApplicationSlice());
     }
     if (!isAuthenticated) {
+      toast.error("Please login in to Apply");
       navigateTo("/");
     }
     dispatch(fetchSingleJob(jobId));
