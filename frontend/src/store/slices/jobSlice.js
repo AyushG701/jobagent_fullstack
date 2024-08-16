@@ -10,6 +10,7 @@ const jobSlice = createSlice({
     message: null,
     singleJob: {},
     myJobs: [],
+    searchedQuery: "",
   },
   reducers: {
     // for all jobs
@@ -105,6 +106,10 @@ const jobSlice = createSlice({
       state.message = null;
       state.myJobs = state.myJobs;
       state.singleJob = {};
+    },
+
+    setSearchedQuery: (state, action) => {
+      state.searchedQuery = action.payload;
     },
   },
 });
@@ -243,4 +248,5 @@ export const resetJobSlice = () => (dispatch) => {
   dispatch(jobSlice.actions.resetJobSlice());
 };
 
+export const { setSearchedQuery } = jobSlice.actions;
 export default jobSlice.reducer;

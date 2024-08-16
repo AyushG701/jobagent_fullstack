@@ -1,4 +1,5 @@
 import React from "react";
+import CategoryCarousel from "./CategoryCarousel";
 
 const Hero = () => {
   return (
@@ -34,6 +35,7 @@ const Hero = () => {
           </div>
         </div>
       </div>
+      {/* <CategoryCarousel /> */}
     </section>
   );
 };

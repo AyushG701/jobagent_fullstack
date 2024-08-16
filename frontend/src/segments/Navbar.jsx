@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu } from "lucide-react";
 import { useSelector } from "react-redux";
+
 const Navbar = () => {
   const [show, setShow] = useState(false);
 
@@ -41,7 +42,7 @@ const Navbar = () => {
                       JOBS
                     </Link>
                   </li>
-                  {isAuthenticated ? (
+                  {/* {isAuthenticated ? (
                     <li>
                       <Link
                         className="text-gray-500 transition hover:text-gray-500/75"
@@ -61,31 +62,43 @@ const Navbar = () => {
                         LOGIN
                       </Link>
                     </li>
-                  )}
+                  )} */}
                 </ul>
               </nav>
             </div>
 
             <div className="flex items-center gap-4">
-              <div className="sm:flex sm:gap-4">
-                <Link
-                  className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow"
-                  to="/login"
-                  onClick={() => setShow(false)}
-                >
-                  Login
-                </Link>
-
-                <div className="hidden sm:flex">
+              {isAuthenticated ? (
+                <div className=" sm:flex">
                   <Link
-                    className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
-                    to="/register"
+                    className="rounded-md bg-red-600 px-5 py-2.5 text-sm font-medium text-white"
+                    to="/dashboard"
                     onClick={() => setShow(false)}
                   >
-                    Register
+                    Dashboard
                   </Link>
                 </div>
-              </div>
+              ) : (
+                <div className="sm:flex sm:gap-4">
+                  <Link
+                    className="rounded-md bg-teal-600 px-5 py-2.5 text-sm font-medium text-white shadow"
+                    to="/login"
+                    onClick={() => setShow(false)}
+                  >
+                    Login
+                  </Link>
+
+                  <div className="hidden sm:flex">
+                    <Link
+                      className="rounded-md bg-gray-100 px-5 py-2.5 text-sm font-medium text-teal-600"
+                      to="/register"
+                      onClick={() => setShow(false)}
+                    >
+                      Register
+                    </Link>
+                  </div>
+                </div>
+              )}
 
               <div className="block md:hidden">
                 <button
