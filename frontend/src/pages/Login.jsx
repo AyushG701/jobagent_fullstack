@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { clearAllUserErrors, login } from "../store/slices/userSlice";
+import { clearAllUserErrors, login } from "../store/slices/userSlice.js";
 import { toast, Toaster } from "sonner";
 import { Lock, Mails, User } from "lucide-react";
 
@@ -10,9 +10,10 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { loading, isAuthenticated, error } = useSelector(
-    (state) => state.user,
-  );
+  const { loading, isAuthenticated, error } = useSelector((state) => {
+    console.log("State in selector of user:", state.user);
+    return state.user;
+  });
 
   const dispatch = useDispatch();
   const navigateTo = useNavigate();
@@ -20,10 +21,17 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("role", role);
-    formData.append("email", email);
-    formData.append("password", password);
+    formData.append("role", role || "");
+    formData.append("email", email || "");
+    formData.append("password", password || "");
+
+    // Log the contents of formData
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+
     dispatch(login(formData));
+    toast.error("login sucessfull");
   };
 
   useEffect(() => {
@@ -32,9 +40,10 @@ const Login = () => {
       dispatch(clearAllUserErrors());
     }
     if (isAuthenticated) {
+      toast.success("Login successful!");
       navigateTo("/");
     }
-  }, [dispatch, error, loading, isAuthenticated]);
+  }, [dispatch, loading, isAuthenticated, error]);
 
   return (
     <>

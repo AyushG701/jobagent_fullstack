@@ -4,14 +4,13 @@ import axios from "axios";
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    loading: false,
     isAuthenticated: false,
+    loading: false,
     user: {},
     error: null,
     message: null,
   },
   reducers: {
-    // Add your reducers here
     registerRequest(state, action) {
       state.loading = true;
       state.isAuthenticated = false;
@@ -41,6 +40,7 @@ const userSlice = createSlice({
       state.message = null;
     },
     loginSuccess(state, action) {
+      // console.log("Reducer - loginSuccess action:", action.payload);
       state.loading = false;
       state.isAuthenticated = true;
       state.user = action.payload.user;
@@ -108,20 +108,33 @@ export const register = (data) => async (dispatch) => {
 };
 
 export const login = (data) => async (dispatch) => {
+  console.log("Dispatching login request...");
   dispatch(userSlice.actions.loginRequest());
+
   try {
     const response = await axios.post(
       "http://localhost:4000/api/v1/user/login",
       data,
       {
         withCredentials: true,
-        headers: { "Content-Type": "application/json" },
+        // Allow axios to set the Content-Type for FormData automatically
+        // headers: { "Content-Type": "multipart/form-data" },
       },
     );
+    // console.log("Login successful:", response.data);
+    console.log("Full Backend Response:", response);
     dispatch(userSlice.actions.loginSuccess(response.data));
     dispatch(userSlice.actions.clearAllErrors());
   } catch (error) {
-    dispatch(userSlice.actions.loginFailed(error.response.data.message));
+    console.log(
+      "Login failed:",
+      error.response?.data?.message || error.message,
+    );
+    dispatch(
+      userSlice.actions.loginFailed(
+        error.response?.data?.message || "An error occurred",
+      ),
+    );
   }
 };
 

@@ -7,7 +7,7 @@ import {
   getMyJobs,
   resetJobSlice,
 } from "../store/slices/jobSlice";
-import Spinner from "../components/Spinner";
+import Spinner from "../segments/Spinner";
 
 const MyJobs = () => {
   const { loading, error, myJobs, message } = useSelector(

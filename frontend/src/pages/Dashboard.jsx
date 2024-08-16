@@ -6,6 +6,7 @@ import { logout, clearAllUserErrors } from "../store/slices/userSlice";
 
 import {
   Briefcase,
+  File,
   FileText,
   Inbox,
   LayoutDashboard,
@@ -20,7 +21,7 @@ import UpdateProfile from "@/segments/UpdateProfile";
 import UpdatePassword from "@/segments/UpdatePassword";
 import JobPost from "@/segments/JobPost";
 import Myjobs from "@/segments/Myjobs";
-import ApplicationSlice from "@/store/slices/applicationSlice";
+import Applications from "@/segments/Applications";
 import MyApplications from "@/segments/MyApplications";
 
 const Dashboard = () => {
@@ -49,9 +50,9 @@ const Dashboard = () => {
       toast.error(error);
       dispatch(clearAllUserErrors());
     }
-    // if (!isAuthenticated) {
-    //   navigateTo("/");
-    // }
+    if (!isAuthenticated) {
+      navigateTo("/");
+    }
   }, [dispatch, error, loading, isAuthenticated]);
 
   return (
@@ -73,14 +74,14 @@ const Dashboard = () => {
           <p className="text-lg font-semibold">
             {!show ? <LayoutDashboard /> : "Dashboard"}
           </p>
-          <p className="mt-2 text-sm text-gray-600">
+          <div className="mt-2 text-sm text-gray-600">
             {show && (
               <p className="mt-2 text-sm text-gray-600">
-                Welcome!{" "}
+                Welcome!
                 <span className="font-medium">{user && user.name}</span>
               </p>
             )}
-          </p>
+          </div>
         </div>
         <div className="flex flex-col">
           <ul className="mt-4 space-y-2">
@@ -117,6 +118,7 @@ const Dashboard = () => {
                 {!show ? <Lock /> : "Update Password"}
               </button>
             </li>
+
             {user && user.role === "Employer" && (
               <>
                 <li>
@@ -141,6 +143,7 @@ const Dashboard = () => {
                     {!show ? <FileText /> : "My Jobs"}
                   </button>
                 </li>
+
                 <li>
                   <button
                     className="w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-200"
@@ -149,12 +152,12 @@ const Dashboard = () => {
                       setShow(!show);
                     }}
                   >
-                    Applications
-                    {!show ? <FileText /> : "Applications"}
+                    {!show ? <File /> : "Applications"}
                   </button>
                 </li>
               </>
             )}
+
             {user && user.role === "Job Seeker" && (
               <li>
                 <button
@@ -164,7 +167,6 @@ const Dashboard = () => {
                     setShow(!show);
                   }}
                 >
-                  My Applications
                   {!show ? <Inbox /> : "My Applications"}
                 </button>
               </li>
@@ -198,7 +200,7 @@ const Dashboard = () => {
             case "My Jobs":
               return <Myjobs />;
             case "Applications":
-              return <ApplicationSlice />;
+              return <Applications />;
             case "My Applications":
               return <MyApplications />;
             default:
